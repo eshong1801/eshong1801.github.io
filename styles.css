@@ -81,6 +81,31 @@ body {
   color: rgb(245 245 245);
 }
 
+/* ---------- PROJECT CARD MEDIA ---------- */
+.card-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  background: rgb(245 245 245);
+  border: 1px solid rgb(229 229 229);
+}
+.dark .card-media {
+  background: rgb(10 10 10);
+  border-color: rgb(38 38 38);
+}
+/* For wide figure-style images (timeline strips, heatmap grids) — fit whole image without cropping */
+.card-media-wide {
+  object-fit: contain;
+  background: rgb(10 10 10);
+}
+iframe.card-media {
+  height: auto;
+}
+
 /* ---------- PROJECT CARDS ---------- */
 .project-card {
   display: flex;
