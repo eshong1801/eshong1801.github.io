@@ -1,0 +1,252 @@
+/* ============================================================
+   Elliot Hong — Portfolio styles
+   Custom styles layered on top of Tailwind (via CDN).
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* offset for sticky nav */
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle dotted background grid in dark mode */
+.dark body {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.025) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+/* ---------- NAV LINKS ---------- */
+.nav-link {
+  position: relative;
+  color: rgb(82 82 82);
+  transition: color 150ms ease;
+}
+.dark .nav-link {
+  color: rgb(163 163 163);
+}
+.nav-link:hover {
+  color: rgb(23 23 23);
+}
+.dark .nav-link:hover {
+  color: rgb(245 245 245);
+}
+.nav-link.active {
+  color: #3b82f6;
+}
+.dark .nav-link.active {
+  color: #3b82f6;
+}
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -22px;
+  height: 2px;
+  background: #3b82f6;
+}
+/* mobile: no underline overflow */
+#mobile-menu .nav-link.active::after {
+  display: none;
+}
+
+/* ---------- HERO ICON LINKS ---------- */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(229 229 229);
+  color: rgb(64 64 64);
+  transition: all 150ms ease;
+}
+.dark .icon-link {
+  border-color: rgb(38 38 38);
+  color: rgb(212 212 212);
+}
+.icon-link:hover {
+  border-color: rgb(163 163 163);
+  color: rgb(23 23 23);
+}
+.dark .icon-link:hover {
+  border-color: rgb(82 82 82);
+  color: rgb(245 245 245);
+}
+
+/* ---------- PROJECT CARDS ---------- */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid rgb(229 229 229);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255);
+  transition: all 200ms ease;
+}
+.dark .project-card {
+  border-color: rgb(38 38 38);
+  background: rgb(17 17 17);
+}
+.project-card:hover {
+  border-color: rgb(163 163 163);
+  transform: translateY(-2px);
+}
+.dark .project-card:hover {
+  border-color: rgb(82 82 82);
+  box-shadow: 0 8px 24px -8px rgba(59, 130, 246, 0.12);
+}
+
+.project-card .card-links {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgb(229 229 229);
+  display: flex;
+  gap: 1rem;
+}
+.dark .project-card .card-links {
+  border-top-color: rgb(38 38 38);
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgb(115 115 115);
+  transition: color 150ms ease;
+  padding-top: 0.75rem;
+}
+.card-link:hover {
+  color: #3b82f6;
+}
+
+/* ---------- CHIPS / TAGS ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  color: rgb(82 82 82);
+  background: rgb(245 245 245);
+  border: 1px solid rgb(229 229 229);
+  border-radius: 0.25rem;
+  transition: all 150ms ease;
+}
+.dark .chip {
+  color: rgb(212 212 212);
+  background: rgb(26 26 26);
+  border-color: rgb(38 38 38);
+}
+
+/* ---------- EXPERIENCE TIMELINE ---------- */
+.exp-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgb(229 229 229);
+}
+.dark .exp-item {
+  border-bottom-color: rgb(38 38 38);
+}
+.exp-item:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  .exp-item {
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+  }
+}
+
+.exp-meta {
+  padding-top: 0.125rem;
+}
+
+/* ---------- SKILLS ---------- */
+.skill-cat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgb(115 115 115);
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(229 229 229);
+}
+.dark .skill-cat {
+  border-bottom-color: rgb(38 38 38);
+}
+
+/* ---------- CONTACT CARDS ---------- */
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgb(229 229 229);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255);
+  transition: all 150ms ease;
+  min-width: 0;
+}
+.dark .contact-card {
+  border-color: rgb(38 38 38);
+  background: rgb(17 17 17);
+}
+.contact-card:hover {
+  border-color: #3b82f6;
+}
+
+.contact-card svg {
+  flex-shrink: 0;
+}
+.contact-card > div {
+  min-width: 0;
+  flex: 1;
+}
+
+/* ---------- ACCESSIBILITY / MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .project-card:hover { transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- SELECTION ---------- */
+::selection {
+  background: rgba(59, 130, 246, 0.25);
+  color: inherit;
+}
+
+/* ---------- SCROLLBAR (dark) ---------- */
+.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 5px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}

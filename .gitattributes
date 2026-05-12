@@ -1,0 +1,24 @@
+# Normalize all text files to LF in the repo.
+# Working-directory line endings are still controlled by core.autocrlf,
+# but committed content is always LF — consistent across Windows/macOS/Linux.
+* text=auto eol=lf
+
+# Explicit text files (silences the CRLF/LF warning on Windows)
+*.html   text eol=lf
+*.css    text eol=lf
+*.js     text eol=lf
+*.json   text eol=lf
+*.md     text eol=lf
+*.svg    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+
+# Binary files — never touch
+*.pdf    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.woff   binary
+*.woff2  binary

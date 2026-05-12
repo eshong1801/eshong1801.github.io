@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elliot Hong — Mechatronics & Hardware-Software Systems Engineer</title>
+  <meta name="description" content="Elliot Hong — Mechatronics-focused engineer building hardware-software systems across embedded firmware, FPGA, and real-time control. Active DoD Secret Clearance." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: {
+              DEFAULT: '#3b82f6',
+              hover: '#2563eb',
+            },
+            ink: {
+              950: '#0a0a0a',
+              900: '#111111',
+              800: '#1a1a1a',
+              700: '#262626',
+              600: '#404040',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="font-sans bg-white text-neutral-900 dark:bg-ink-950 dark:text-neutral-100 antialiased">
+
+  <!-- ============== NAV ============== -->
+  <header id="nav" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-ink-950/80 border-b border-neutral-200 dark:border-ink-800 transition-colors">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#home" class="font-mono text-sm font-semibold tracking-tight hover:text-accent transition-colors">
+        elliot_hong<span class="text-accent">.</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-8 text-sm">
+        <li><a href="#home" data-nav class="nav-link">Home</a></li>
+        <li><a href="#projects" data-nav class="nav-link">Projects</a></li>
+        <li><a href="#experience" data-nav class="nav-link">Experience</a></li>
+        <li><a href="#skills" data-nav class="nav-link">Skills</a></li>
+        <li><a href="#contact" data-nav class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" aria-label="Toggle color theme" class="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800 transition-colors">
+          <!-- Sun (shown in dark mode) -->
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <!-- Moon (shown in light mode) -->
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-ink-800 bg-white dark:bg-ink-950">
+      <ul class="px-6 py-4 space-y-3 text-sm">
+        <li><a href="#home" data-nav class="block nav-link">Home</a></li>
+        <li><a href="#projects" data-nav class="block nav-link">Projects</a></li>
+        <li><a href="#experience" data-nav class="block nav-link">Experience</a></li>
+        <li><a href="#skills" data-nav class="block nav-link">Skills</a></li>
+        <li><a href="#contact" data-nav class="block nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============== HERO ============== -->
+    <section id="home" class="min-h-screen flex items-center px-6 pt-24 pb-16">
+      <div class="max-w-6xl mx-auto w-full">
+
+        <!-- Clearance badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-8 rounded-full border border-accent/40 bg-accent/10 text-accent text-xs font-mono uppercase tracking-wider">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+          Active DoD Secret Clearance
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05] mb-6">
+          Elliot Hong
+        </h1>
+
+        <p class="text-lg sm:text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed mb-10">
+          Mechatronics-focused engineer building hardware–software systems across <span class="text-neutral-900 dark:text-neutral-200">embedded firmware</span>, <span class="text-neutral-900 dark:text-neutral-200">FPGA</span>, and <span class="text-neutral-900 dark:text-neutral-200">real-time control</span>.
+        </p>
+
+        <!-- CTAs + links -->
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="#projects" class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-md transition-colors">
+            View Projects
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+
+          <a href="mailto:ellioth00@berkeley.edu" class="icon-link" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>Email</span>
+          </a>
+
+          <a href="https://www.linkedin.com/in/elliot-hong/" target="_blank" rel="noopener" class="icon-link" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>LinkedIn</span>
+          </a>
+
+          <a href="https://github.com/eshong1801" target="_blank" rel="noopener" class="icon-link" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+
+        <!-- Location / education quick row -->
+        <div class="mt-12 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral-500 dark:text-neutral-500 font-mono">
+          <span class="flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Berkeley, CA
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            MS Mechanical Engineering, UC Berkeley
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== ABOUT ============== -->
+    <section id="about" class="px-6 py-24 border-t border-neutral-200 dark:border-ink-800">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-12">
+          <div>
+            <p class="font-mono text-xs uppercase tracking-wider text-accent mb-2">01 / About</p>
+            <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">About</h2>
+          </div>
+          <div class="md:col-span-2 space-y-5 text-neutral-700 dark:text-neutral-300 leading-relaxed">
+            <p>
+              I'm a graduate engineer at UC Berkeley finishing an MS in Mechanical Engineering (May 2026), with a BS in Mechanical Engineering and an EECS minor completed Dec 2024. My work sits at the intersection of mechanical hardware, embedded firmware, and digital logic — the kind of full-stack systems engineering that defense and aerospace platforms run on.
+            </p>
+            <p>
+              I build pipelined RISC-V CPUs on Xilinx FPGAs, write FreeRTOS firmware for real-time attitude control, design buck/boost power electronics and PCBs, and ship the operating-system kernels and compilers that run on top. I hold an active DoD Secret clearance from a summer at the Naval Air Warfare Center Weapons Division, where I worked on phased-array beam-steering and RF signal processing.
+            </p>
+            <p>
+              I'm looking for hardware–software systems roles at defense primes or defense-adjacent startups — places where firmware lives next to silicon, latency budgets are measured in microseconds, and the system has to actually fly, sail, or steer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PROJECTS ============== -->
+    <section id="projects" class="px-6 py-24 border-t border-neutral-200 dark:border-ink-800">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-12">
+          <p class="font-mono text-xs uppercase tracking-wider text-accent mb-2">02 / Projects</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Selected Projects</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">Spring 2026</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Custom 5-Stage RISC-V Processor</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Pipelined RISC-V CPU on Xilinx FPGA with M-extension.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Designed and verified a pipelined RISC-V CPU implementing the M-extension (mul/div/rem) with hazard detection and forwarding logic.</li>
+              <li>Integrated a UART peripheral for off-chip I/O and validated execution against custom assembly test programs.</li>
+              <li>Pair-collaborated via Git on a shared FPGA repo.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Xilinx FPGA</span>
+              <span class="chip">Verilog</span>
+              <span class="chip">RISC-V</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" aria-label="GitHub repo">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                Code
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 280</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">V-JEPA Object Tracking</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Latent-space trajectory prediction through occlusions.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Used the V-JEPA 2.1 model with CNN decoders for latent-space prediction of projectile trajectories behind occlusions.</li>
+              <li>Predicts where a projectile will be after disappearing behind an obstacle — useful for tracking tasks where direct observation is broken.</li>
+              <li>Built and evaluated end-to-end on a custom dataset of occluded motion sequences.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Python</span>
+              <span class="chip">PyTorch</span>
+              <span class="chip">V-JEPA 2.1</span>
+              <span class="chip">CNN</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link"><svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> Code</a>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">Hardware</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Rocket Attitude Controller</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Real-time roll-axis stabilization on FreeRTOS.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Roll-axis stabilization using FreeRTOS with separate real-time tasks for IMU sampling, control loop, and telemetry.</li>
+              <li>Streams live attitude and IMU data wirelessly to a LabVIEW GUI ground station.</li>
+              <li>Hardware/software integration project combining sensor fusion and real-time scheduling.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">ESP32</span>
+              <span class="chip">FreeRTOS</span>
+              <span class="chip">C/C++</span>
+              <span class="chip">LabVIEW</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link"><svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> Code</a>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 162</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Pintos Operating System</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">User programs, threading, and a buffered FS in a teaching kernel.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Led a 4-engineer team implementing user programs, system calls (exec/wait/exit, file I/O), and a 1:1 user-threading model.</li>
+              <li>Engineered semaphores, monitors, condition variables, and priority donation; debugged parent/child shared-state synchronization with GDB.</li>
+              <li>Extended the file system with a write-back buffer cache and indirect inode blocks.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">C</span>
+              <span class="chip">x86 ASM</span>
+              <span class="chip">GDB</span>
+              <span class="chip">Make</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link"><svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> Code</a>
+            </div>
+          </article>
+
+          <!-- Project 5 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 164</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">ChocoPy → RISC-V Compiler</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Multi-pass compiler from a Python subset to RISC-V assembly.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Multi-pass compiler for a Python subset: lexer/parser (CUP grammar), scoped semantic analyzer, type checker, RISC-V code generator.</li>
+              <li>Targets the same RISC-V ISA implemented in my FPGA processor project — full stack from silicon to source language.</li>
+              <li>Generated executables validated against the official ChocoPy reference test suite.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Java</span>
+              <span class="chip">Maven</span>
+              <span class="chip">CUP</span>
+              <span class="chip">RISC-V</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link"><svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> Code</a>
+            </div>
+          </article>
+
+          <!-- Project 6 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">Ongoing</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Robotics & Hardware Prototyping</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Integrated firmware, mechanical, and sensor builds.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Ongoing hardware builds integrating circuit design, custom 3D-printed mechanical structures, and sensor stacks.</li>
+              <li>I²C and SPI peripheral integration; firmware development in C/C++ and MicroPython.</li>
+              <li>Motor control with L298N drivers and VL53L0X ToF ranging for obstacle-aware platforms.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">ESP32</span>
+              <span class="chip">L298N</span>
+              <span class="chip">VL53L0X</span>
+              <span class="chip">3D Print</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link"><svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> Code</a>
+            </div>
+          </article>
+
+          <!-- Project 7 -->
+          <article class="project-card">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">Production</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">BearQueue</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Student management for UC Berkeley ME — 500+ users.</p>
+            <ul class="text-sm text-neutral-700 dark:text-neutral-300 space-y-1.5 mb-5 list-disc list-outside ml-4">
+              <li>Student management system built for the UC Berkeley Mechanical Engineering department.</li>
+              <li>Handles 500+ students across multiple classes.</li>
+              <li>Live at bearqueue.com — full-stack web deployment.</li>
+            </ul>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Full-Stack</span>
+              <span class="chip">Web</span>
+            </div>
+            <div class="card-links">
+              <a href="https://bearqueue.com" target="_blank" rel="noopener" class="card-link">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Live Site
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== EXPERIENCE ============== -->
+    <section id="experience" class="px-6 py-24 border-t border-neutral-200 dark:border-ink-800">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-12">
+          <p class="font-mono text-xs uppercase tracking-wider text-accent mb-2">03 / Experience</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Experience</h2>
+        </div>
+
+        <div class="space-y-2">
+          <!-- Item -->
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="font-mono text-xs text-neutral-500">Jan 2024 – Present</span>
+            </div>
+            <div class="exp-body">
+              <h3 class="text-base font-semibold">Squishy Robotics Researcher <span class="text-neutral-500 font-normal">· UC Berkeley B.E.S.T. Lab</span></h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">PCB design (Eagle), buck/boost power electronics, Teensy + XBee mesh firmware for 12-node coordinated control, IMU-based closed-loop maneuverability.</p>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="font-mono text-xs text-neutral-500">Apr 2023 – Present</span>
+            </div>
+            <div class="exp-body">
+              <h3 class="text-base font-semibold">Head TA / Student Instructor <span class="text-neutral-500 font-normal">· UC Berkeley</span></h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Head TA for EE 49 (Electronics for IoT, 150 students) on MicroPython/ESP32 and circuit analysis; TA for intro programming (100+ students).</p>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="font-mono text-xs text-neutral-500">Jan – Dec 2024</span>
+            </div>
+            <div class="exp-body">
+              <h3 class="text-base font-semibold">Undergraduate Researcher <span class="text-neutral-500 font-normal">· UC Berkeley TAF Research Lab</span></h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Led EE team designing sensors and actuators for an autonomous sailboat.</p>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="font-mono text-xs text-neutral-500">Jun – Aug 2023</span>
+            </div>
+            <div class="exp-body">
+              <h3 class="text-base font-semibold">STEM Student Intern <span class="text-neutral-500 font-normal">· Naval Air Warfare Center Weapons Division</span></h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">FPGA signal processing (anti-aliasing filters, phased-array beam-steering) on Xilinx via Vitis Model Composer; CST Studio antenna design; LPKF CNC fabrication.</p>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="font-mono text-xs text-neutral-500">Jun – Aug 2022</span>
+            </div>
+            <div class="exp-body">
+              <h3 class="text-base font-semibold">Research Fellow <span class="text-neutral-500 font-normal">· MIT Station1 Frontiers / Climate TRACE</span></h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Integrated real-time data from 400+ global power plants using Pandas and AI-driven satellite imagery for CO₂ emission monitoring.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SKILLS ============== -->
+    <section id="skills" class="px-6 py-24 border-t border-neutral-200 dark:border-ink-800">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-12">
+          <p class="font-mono text-xs uppercase tracking-wider text-accent mb-2">04 / Skills</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Skills</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+          <div>
+            <h3 class="skill-cat">Languages</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">C/C++</span>
+              <span class="chip">Python</span>
+              <span class="chip">Java</span>
+              <span class="chip">Verilog</span>
+              <span class="chip">RISC-V Assembly</span>
+              <span class="chip">MicroPython</span>
+              <span class="chip">MATLAB</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="skill-cat">Embedded & RTOS</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">FreeRTOS</span>
+              <span class="chip">Pintos Kernel</span>
+              <span class="chip">ESP32</span>
+              <span class="chip">Teensy</span>
+              <span class="chip">Arduino</span>
+              <span class="chip">UART</span>
+              <span class="chip">I²C</span>
+              <span class="chip">SPI</span>
+              <span class="chip">PID Control</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="skill-cat">FPGA & Hardware</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">Xilinx FPGA</span>
+              <span class="chip">Vitis</span>
+              <span class="chip">PCB Design (Eagle)</span>
+              <span class="chip">Buck/Boost Converters</span>
+              <span class="chip">CST Studio</span>
+              <span class="chip">LPKF</span>
+              <span class="chip">Signal Processing</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="skill-cat">Robotics, CV, ML</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">ROS2</span>
+              <span class="chip">OpenCV</span>
+              <span class="chip">PyTorch</span>
+            </div>
+          </div>
+
+          <div class="md:col-span-2">
+            <h3 class="skill-cat">CAD & Simulation</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">SolidWorks</span>
+              <span class="chip">Fusion 360</span>
+              <span class="chip">PrusaSlicer</span>
+              <span class="chip">OpenRocket</span>
+              <span class="chip">LabVIEW</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== CONTACT ============== -->
+    <section id="contact" class="px-6 py-24 border-t border-neutral-200 dark:border-ink-800">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-12">
+          <p class="font-mono text-xs uppercase tracking-wider text-accent mb-2">05 / Contact</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Get in Touch</h2>
+          <p class="mt-4 text-neutral-600 dark:text-neutral-400 max-w-2xl">
+            Open to full-time hardware–software systems roles starting summer 2026. Reach out via email or LinkedIn.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+          <a href="mailto:ellioth00@berkeley.edu" class="contact-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <p class="text-xs font-mono uppercase tracking-wider text-neutral-500">Email</p>
+              <p class="text-sm font-medium truncate">ellioth00@berkeley.edu</p>
+            </div>
+          </a>
+
+          <a href="tel:+14243949378" class="contact-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+            <div>
+              <p class="text-xs font-mono uppercase tracking-wider text-neutral-500">Phone</p>
+              <p class="text-sm font-medium">(424) 394-9378</p>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/elliot-hong/" target="_blank" rel="noopener" class="contact-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <div>
+              <p class="text-xs font-mono uppercase tracking-wider text-neutral-500">LinkedIn</p>
+              <p class="text-sm font-medium">elliot-hong</p>
+            </div>
+          </a>
+
+          <a href="https://github.com/eshong1801" target="_blank" rel="noopener" class="contact-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <div>
+              <p class="text-xs font-mono uppercase tracking-wider text-neutral-500">GitHub</p>
+              <p class="text-sm font-medium">eshong1801</p>
+            </div>
+          </a>
+        </div>
+
+        <a href="resume.pdf" download class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-md transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </a>
+      </div>
+    </section>
+
+    <!-- ============== FOOTER ============== -->
+    <footer class="px-6 py-10 border-t border-neutral-200 dark:border-ink-800">
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500 font-mono">
+        <p>© <span id="year"></span> Elliot Hong. Built with HTML, CSS, and JS.</p>
+        <p>Berkeley, CA</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
