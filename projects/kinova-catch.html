@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinova Gen3 — Flying-Ball Catch — Elliot Hong</title>
+  <meta name="description" content="Real-time ball catching with a single RGB camera and Model Predictive Control on a Kinova Gen3 robotic arm." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#3b82f6', hover: '#2563eb' },
+            ink: { 950: '#0a0a0a', 900: '#111111', 800: '#1a1a1a', 700: '#262626', 600: '#404040' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body class="font-sans bg-white text-neutral-900 dark:bg-ink-950 dark:text-neutral-100 antialiased">
+
+  <header id="nav" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-ink-950/80 border-b border-neutral-200 dark:border-ink-800 transition-colors">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="font-mono text-sm font-semibold tracking-tight hover:text-accent transition-colors">elliot_hong<span class="text-accent">.</span></a>
+      <ul class="hidden md:flex items-center gap-8 text-sm">
+        <li><a href="../index.html#home" class="nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" aria-label="Toggle color theme" class="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800 transition-colors">
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-ink-800 bg-white dark:bg-ink-950">
+      <ul class="px-6 py-4 space-y-3 text-sm">
+        <li><a href="../index.html#home" class="block nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="block nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="block nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="block nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="block nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-28 pb-16 px-6">
+    <article class="max-w-4xl mx-auto">
+
+      <a href="../index.html#projects" class="back-link">
+        <span class="arrow">←</span> Back to Projects
+      </a>
+
+      <p class="project-meta">Fall 2025 · Robotics · Computer Vision</p>
+      <h1 class="project-title">Kinova Gen3 — Flying-Ball Catch</h1>
+      <p class="project-tagline">
+        Programmed a Kinova Gen3 7-DOF robotic arm to catch a flying ball in real time —
+        combining single-camera RGB trajectory estimation with Model Predictive Control
+        for end-effector positioning.
+      </p>
+
+      <div class="project-body">
+
+        <section>
+          <h2>Overview</h2>
+          <p>
+            A robotics project that pushes a commercial 7-DOF arm into a hard real-time regime:
+            estimate where a thrown ball will be in &lt;1 second, plan a joint trajectory to put
+            the end-effector there, and execute it before the ball passes by.
+          </p>
+          <p>
+            The constraint of a <strong>single RGB camera</strong> (no depth sensor, no stereo)
+            forced reliance on physical priors — projectile motion + known ball size — to recover
+            the missing depth dimension.
+          </p>
+        </section>
+
+        <section>
+          <h2>What I Built</h2>
+          <ul>
+            <li>Vision pipeline detecting the ball each frame and estimating its 3D trajectory from monocular RGB.</li>
+            <li>Trajectory prediction combining projectile-motion physics with online state estimation.</li>
+            <li><strong>Model Predictive Control (MPC)</strong> loop computing joint commands to move the end-effector to the predicted intercept point with bounded jerk and joint-limit constraints.</li>
+            <li>Integration with the Kinova Gen3 API for low-latency arm control.</li>
+            <li>End-to-end validation: real flying balls caught under lab conditions.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Tech Stack</h2>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">Kinova Gen3</span>
+            <span class="chip">MPC</span>
+            <span class="chip">OpenCV</span>
+            <span class="chip">Python</span>
+            <span class="chip">Trajectory Estimation</span>
+            <span class="chip">7-DOF Kinematics</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Links</h2>
+          <div class="project-links">
+            <a href="#" class="project-link-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </section>
+
+      </div>
+
+      <section class="related-section">
+        <a href="../index.html#projects" class="continue-link"><span class="arrow">←</span> Continue exploring all projects</a>
+        <h2 class="text-2xl font-semibold tracking-tight mb-8">Related Projects</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <a href="vjepa.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></div>
+              <span class="text-xs font-mono text-neutral-500">CS 280</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">V-JEPA Object Tracking</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Latent-space trajectory prediction — companion vision project for occluded tracking.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Python</span><span class="chip">PyTorch</span><span class="chip">CNN</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="drone-controller.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+              <span class="text-xs font-mono text-neutral-500">ME 136</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Autonomous Drone Hovering Controller</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Closed-loop control on another platform — quadrotor flight.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Quadrotor</span><span class="chip">PID</span><span class="chip">Control</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="rocket-controller.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></div>
+              <span class="text-xs font-mono text-neutral-500">Hardware</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Rocket Attitude Controller</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Real-time control under tight latency budgets — FreeRTOS on ESP32.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">ESP32</span><span class="chip">FreeRTOS</span><span class="chip">C/C++</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="px-6 py-10 border-t border-neutral-200 dark:border-ink-800">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500 font-mono">
+      <p>© <span id="year"></span> Elliot Hong. Built with HTML, CSS, and JS.</p>
+      <p>Berkeley, CA</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

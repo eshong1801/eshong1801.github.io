@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BearQueue — Elliot Hong</title>
+  <meta name="description" content="Production student management platform for UC Berkeley Mechanical Engineering — serving 500+ students across multiple classes." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#3b82f6', hover: '#2563eb' },
+            ink: { 950: '#0a0a0a', 900: '#111111', 800: '#1a1a1a', 700: '#262626', 600: '#404040' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body class="font-sans bg-white text-neutral-900 dark:bg-ink-950 dark:text-neutral-100 antialiased">
+
+  <header id="nav" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-ink-950/80 border-b border-neutral-200 dark:border-ink-800 transition-colors">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="font-mono text-sm font-semibold tracking-tight hover:text-accent transition-colors">
+        elliot_hong<span class="text-accent">.</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm">
+        <li><a href="../index.html#home" class="nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" aria-label="Toggle color theme" class="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800 transition-colors">
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-ink-800 bg-white dark:bg-ink-950">
+      <ul class="px-6 py-4 space-y-3 text-sm">
+        <li><a href="../index.html#home" class="block nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="block nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="block nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="block nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="block nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-28 pb-16 px-6">
+    <article class="max-w-4xl mx-auto">
+
+      <a href="../index.html#projects" class="back-link">
+        <span class="arrow">←</span> Back to Projects
+      </a>
+
+      <p class="project-meta">Production · Full-Stack Web · Team Lead</p>
+      <h1 class="project-title">BearQueue</h1>
+      <p class="project-tagline">
+        Production ticketing platform built for the UC Berkeley Mechanical Engineering
+        department — React frontend, Java backend, AWS-hosted, serving 500+ students.
+      </p>
+
+      <div class="project-body">
+
+        <section>
+          <h2>Overview</h2>
+          <p>
+            BearQueue (internally known as the <strong>Ticketing Management System / TMS</strong>)
+            is a full-stack web application the UC Berkeley Mechanical Engineering department uses
+            to manage student workflows — queues, office hours, class operations, and activity
+            logging. Live at <a href="https://www.bearqueue.com/" target="_blank" rel="noopener" style="color:#3b82f6;text-decoration:underline;">www.bearqueue.com</a>.
+          </p>
+          <p>
+            Unlike most school projects, this one had real users from day one and continues to
+            iterate as the department's needs evolve.
+          </p>
+        </section>
+
+        <section>
+          <h2>What I Built</h2>
+          <ul>
+            <li><strong>Led the TMS engineering group</strong>, coordinating frontend, backend, and infrastructure work across a 150-student initial deployment that grew to 500+ active users.</li>
+            <li>Built the application with a <strong>React frontend</strong> and a <strong>Java backend</strong>, designed for the operational realities of the Berkeley ME department rather than a generic queue tool.</li>
+            <li>Deployed to production on <strong>Amazon Web Services</strong> with <strong>MongoDB</strong> as the persistence layer and <strong>Google Sign-In</strong> for user authentication.</li>
+            <li>Designed the system to log every administrative activity — providing the department a durable audit trail for student-support workflows.</li>
+            <li>Currently in active production at <code>www.bearqueue.com</code>, used routinely by ME faculty and staff.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Why It Matters</h2>
+          <p>
+            Most portfolio projects never see a user. This one runs in production, gets used by
+            real students every week, and has to keep working. That's a different engineering
+            discipline than a homework assignment — uptime matters, edge cases bite, and
+            feature requests come from people whose workflows you can actually break.
+          </p>
+        </section>
+
+        <section>
+          <h2>Tech Stack</h2>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">React</span>
+            <span class="chip">Java</span>
+            <span class="chip">AWS</span>
+            <span class="chip">MongoDB</span>
+            <span class="chip">Google Sign-In</span>
+            <span class="chip">REST API</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Links</h2>
+          <div class="project-links">
+            <a href="https://www.bearqueue.com/" target="_blank" rel="noopener" class="project-link-btn primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Visit www.bearqueue.com
+            </a>
+          </div>
+        </section>
+
+      </div>
+
+      <section class="related-section">
+        <a href="../index.html#projects" class="continue-link"><span class="arrow">←</span> Continue exploring all projects</a>
+        <h2 class="text-2xl font-semibold tracking-tight mb-8">Related Projects</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <a href="robotics-prototyping.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">Ongoing</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Robotics & Hardware Prototyping</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">The other side of my engineering work — embedded firmware and hardware.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">ESP32</span>
+              <span class="chip">VL53L0X</span>
+              <span class="chip">3D Print</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="chocopy-compiler.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 164</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">ChocoPy → RISC-V Compiler</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">A different kind of software engineering — multi-pass compiler in Java.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Java</span>
+              <span class="chip">CUP</span>
+              <span class="chip">RISC-V</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="vjepa.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 280</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">V-JEPA Object Tracking</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Computer vision research — tracking projectiles through occlusions.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Python</span>
+              <span class="chip">PyTorch</span>
+              <span class="chip">CNN</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="px-6 py-10 border-t border-neutral-200 dark:border-ink-800">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500 font-mono">
+      <p>© <span id="year"></span> Elliot Hong. Built with HTML, CSS, and JS.</p>
+      <p>Berkeley, CA</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

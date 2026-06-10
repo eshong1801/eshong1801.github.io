@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChocoPy → RISC-V Compiler — Elliot Hong</title>
+  <meta name="description" content="A multi-pass compiler from a Python subset to RISC-V assembly — targeting the same ISA my FPGA processor executes." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#3b82f6', hover: '#2563eb' },
+            ink: { 950: '#0a0a0a', 900: '#111111', 800: '#1a1a1a', 700: '#262626', 600: '#404040' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body class="font-sans bg-white text-neutral-900 dark:bg-ink-950 dark:text-neutral-100 antialiased">
+
+  <header id="nav" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-ink-950/80 border-b border-neutral-200 dark:border-ink-800 transition-colors">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="font-mono text-sm font-semibold tracking-tight hover:text-accent transition-colors">
+        elliot_hong<span class="text-accent">.</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm">
+        <li><a href="../index.html#home" class="nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" aria-label="Toggle color theme" class="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800 transition-colors">
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-ink-800 bg-white dark:bg-ink-950">
+      <ul class="px-6 py-4 space-y-3 text-sm">
+        <li><a href="../index.html#home" class="block nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="block nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="block nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="block nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="block nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-28 pb-16 px-6">
+    <article class="max-w-4xl mx-auto">
+
+      <a href="../index.html#projects" class="back-link">
+        <span class="arrow">←</span> Back to Projects
+      </a>
+
+      <p class="project-meta">CS 164 · Compilers · Code Generation</p>
+      <h1 class="project-title">ChocoPy → RISC-V Compiler</h1>
+      <p class="project-tagline">
+        A multi-pass compiler translating ChocoPy — a typed subset of Python — directly into
+        RISC-V assembly. Targets the same ISA my pipelined FPGA processor executes.
+      </p>
+
+      <div class="project-body">
+
+        <section>
+          <h2>Overview</h2>
+          <p>
+            ChocoPy is a teaching language with Python-like syntax and static types. The
+            compiler is a full multi-stage frontend and backend, implemented in Java, ending
+            in RISC-V code generation.
+          </p>
+          <p>
+            Pairing this with the pipelined RISC-V CPU project gives me a working end-to-end
+            stack: source code goes through the compiler, the resulting assembly executes on
+            silicon I designed myself. That's the full software-hardware boundary, both
+            sides built from scratch.
+          </p>
+        </section>
+
+        <section>
+          <h2>What I Built</h2>
+          <ul>
+            <li><strong>Lexer and parser</strong> using the CUP grammar generator, producing an AST for the full ChocoPy grammar including classes, methods, and nested scopes.</li>
+            <li><strong>Scoped semantic analyzer</strong> resolving variable bindings across nested function and class scopes with proper shadowing rules.</li>
+            <li><strong>Static type checker</strong> enforcing ChocoPy's type rules — including subtyping, generic list types, and method overriding.</li>
+            <li><strong>RISC-V code generator</strong> emitting RV32 assembly with calling-convention-compliant function prologues/epilogues and stack frame management.</li>
+            <li><strong>Runtime support</strong> for ChocoPy primitives, list operations, and class dispatch via vtables.</li>
+            <li>Generated executables validated against the <strong>official ChocoPy reference test suite</strong>.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Why It Matters</h2>
+          <p>
+            Compilers are where high-level intent gets translated into the instructions a
+            machine actually runs. For defense systems where you might be writing code that
+            targets custom FPGA pipelines or hardened embedded ISAs, the ability to reason
+            about codegen — and even modify it — is genuinely useful.
+          </p>
+        </section>
+
+        <section>
+          <h2>Tech Stack</h2>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">Java</span>
+            <span class="chip">Maven</span>
+            <span class="chip">CUP</span>
+            <span class="chip">JFlex</span>
+            <span class="chip">RISC-V Assembly</span>
+            <span class="chip">JUnit</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Links</h2>
+          <div class="project-links">
+            <a href="#" class="project-link-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </section>
+
+      </div>
+
+      <section class="related-section">
+        <a href="../index.html#projects" class="continue-link"><span class="arrow">←</span> Continue exploring all projects</a>
+        <h2 class="text-2xl font-semibold tracking-tight mb-8">Related Projects</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <a href="riscv-cpu.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">Spring 2026</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Custom 3-Stage RISC-V Processor</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">The CPU that executes the assembly this compiler produces.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">FPGA</span>
+              <span class="chip">Verilog</span>
+              <span class="chip">RISC-V</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="pintos.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 162</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Pintos Operating System</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">The runtime layer that loads and executes compiled programs.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">C</span>
+              <span class="chip">x86 ASM</span>
+              <span class="chip">GDB</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="vjepa.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg>
+              </div>
+              <span class="text-xs font-mono text-neutral-500">CS 280</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">V-JEPA Object Tracking</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Different kind of multi-pass system — latent-space prediction for occluded vision.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="chip">Python</span>
+              <span class="chip">PyTorch</span>
+              <span class="chip">CNN</span>
+            </div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="px-6 py-10 border-t border-neutral-200 dark:border-ink-800">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500 font-mono">
+      <p>© <span id="year"></span> Elliot Hong. Built with HTML, CSS, and JS.</p>
+      <p>Berkeley, CA</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

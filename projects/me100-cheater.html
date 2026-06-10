@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>"The Cheater" — ESP32 IoT (ME 100) — Elliot Hong</title>
+  <meta name="description" content="My first embedded IoT project — built in ME 100 as my entry point into ESP32 firmware and the wireless-connected hardware stack." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: {
+      colors: { accent: { DEFAULT: '#3b82f6', hover: '#2563eb' }, ink: { 950: '#0a0a0a', 900: '#111111', 800: '#1a1a1a', 700: '#262626', 600: '#404040' } },
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'ui-monospace', 'monospace'] },
+    } } };
+  </script>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body class="font-sans bg-white text-neutral-900 dark:bg-ink-950 dark:text-neutral-100 antialiased">
+
+  <header id="nav" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-ink-950/80 border-b border-neutral-200 dark:border-ink-800 transition-colors">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="font-mono text-sm font-semibold tracking-tight hover:text-accent transition-colors">elliot_hong<span class="text-accent">.</span></a>
+      <ul class="hidden md:flex items-center gap-8 text-sm">
+        <li><a href="../index.html#home" class="nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" aria-label="Toggle color theme" class="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800 transition-colors">
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-ink-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-ink-800 bg-white dark:bg-ink-950">
+      <ul class="px-6 py-4 space-y-3 text-sm">
+        <li><a href="../index.html#home" class="block nav-link">Home</a></li>
+        <li><a href="../index.html#projects" class="block nav-link">Projects</a></li>
+        <li><a href="../index.html#experience" class="block nav-link">Experience</a></li>
+        <li><a href="../index.html#skills" class="block nav-link">Skills</a></li>
+        <li><a href="../index.html#contact" class="block nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-28 pb-16 px-6">
+    <article class="max-w-4xl mx-auto">
+
+      <a href="../index.html#projects" class="back-link">
+        <span class="arrow">←</span> Back to Projects
+      </a>
+
+      <p class="project-meta">ME 100 · Fall 2022 · Embedded · IoT</p>
+      <h1 class="project-title">"The Cheater" — ESP32 IoT Project</h1>
+      <p class="project-tagline">
+        My first embedded IoT project, built in ME 100 — the entry point into the ESP32 +
+        MicroPython hardware stack I've used on every project since.
+      </p>
+
+      <div class="project-body">
+
+        <section>
+          <h2>Overview</h2>
+          <p>
+            ME 100 (Electronics for IoT) is Berkeley's hands-on intro to embedded firmware
+            and wireless-connected hardware. "The Cheater" was my course project — and where
+            my hardware journey actually started. Several years and many builds later, the
+            ESP32 + MicroPython stack I picked up here still underpins my current robotics
+            and sensor work.
+          </p>
+        </section>
+
+        <section>
+          <h2>What I Built</h2>
+          <ul>
+            <li>ESP32-based IoT device built as part of the ME 100 course project.</li>
+            <li>MicroPython firmware on Espressif hardware.</li>
+            <li>Wireless connectivity for remote command and control.</li>
+            <li>Hands-on integration of circuits, sensors, and embedded firmware — the toolchain I've extended in every project since.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Tech Stack</h2>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">ESP32</span>
+            <span class="chip">MicroPython</span>
+            <span class="chip">IoT</span>
+            <span class="chip">Wireless</span>
+            <span class="chip">Embedded</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Links</h2>
+          <div class="project-links">
+            <a href="#" class="project-link-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </section>
+
+      </div>
+
+      <section class="related-section">
+        <a href="../index.html#projects" class="continue-link"><span class="arrow">←</span> Continue exploring all projects</a>
+        <h2 class="text-2xl font-semibold tracking-tight mb-8">Related Projects</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <a href="vending-machine.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="6" x2="15" y2="6"/><line x1="9" y1="10" x2="15" y2="10"/><circle cx="12" cy="17" r="2"/></svg></div>
+              <span class="text-xs font-mono text-neutral-500">ME 102B</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Vending Machine</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Same embedded muscle, scaled up to a full mechatronic system.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4"><span class="chip">Mechatronics</span><span class="chip">Embedded</span></div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="3d-scanner.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+              <span class="text-xs font-mono text-neutral-500">Spring 2026</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Dual-ToF 3D Scanner</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">Where the ESP32 stack ended up — precision sensing.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4"><span class="chip">ESP32</span><span class="chip">ToF Sensors</span></div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+          <a href="robotics-prototyping.html" class="project-card group">
+            <div class="flex items-start justify-between mb-3">
+              <div class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></svg></div>
+              <span class="text-xs font-mono text-neutral-500">Ongoing</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-1">Robotics & Hardware Prototyping</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">The ongoing extension of this embedded stack.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4"><span class="chip">ESP32</span><span class="chip">3D Print</span></div>
+            <div class="card-links"><span class="card-cta">Read more <span class="arrow">→</span></span></div>
+          </a>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="px-6 py-10 border-t border-neutral-200 dark:border-ink-800">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500 font-mono">
+      <p>© <span id="year"></span> Elliot Hong. Built with HTML, CSS, and JS.</p>
+      <p>Berkeley, CA</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
