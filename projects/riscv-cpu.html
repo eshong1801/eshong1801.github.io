@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Custom 3-Stage RISC-V Processor — Elliot Hong</title>
-  <meta name="description" content="Pipelined RISC-V CPU on Xilinx FPGA with M-extension, hazard detection, forwarding, and a UART peripheral." />
+  <meta name="description" content="Pipelined RV32IM RISC-V CPU in SystemVerilog on Xilinx FPGA — M-extension, hazard detection, forwarding, UART, and a Zephyr RTOS booting to a live shell." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -76,8 +76,9 @@
       <p class="project-meta">Spring 2026 · FPGA · Computer Architecture</p>
       <h1 class="project-title">Custom 3-Stage RISC-V Processor</h1>
       <p class="project-tagline">
-        A pipelined 3-stage RISC-V CPU implemented in Verilog and synthesized to a Xilinx FPGA —
-        including the M-extension, full hazard handling, and a UART peripheral for off-chip I/O.
+        A pipelined 3-stage RISC-V CPU written in SystemVerilog and synthesized to a Xilinx FPGA —
+        full RV32IM, hazard handling and forwarding, a UART peripheral, and a Zephyr RTOS booting
+        to a live shell.
       </p>
 
       <div class="project-body">
@@ -85,27 +86,69 @@
         <section>
           <h2>Overview</h2>
           <p>
-            This project implements a 3-stage pipeline (Fetch, Execute, Writeback) in Verilog
-            and synthesizes it onto a Xilinx FPGA development board. The result is real silicon
+            This project implements a 3-stage pipeline — Fetch, Execute, Writeback — in
+            SystemVerilog and synthesizes it onto a Xilinx FPGA. The result is real silicon
             (well, real LUTs) executing RV32IM programs that I write, assemble, and load over UART.
           </p>
           <p>
-            Beyond the textbook pipeline, the design needed to actually handle the messy parts:
-            structural and data hazards, control flow disruption from branches, and the multi-cycle
-            behavior of the M-extension's divide unit.
+            The core came together in layers. The foundation was the bare pipeline: the three
+            stages, their pipeline registers, and the base RV32I instruction set wired through a
+            clean datapath — enough to fetch, decode, execute, and retire a single instruction
+            stream end to end.
+          </p>
+          <p>
+            Then came the messy parts a textbook diagram hides. A real pipeline overlaps
+            instructions, so I added a hazard-detection unit with writeback-to-execute and
+            writeback-to-decode forwarding to resolve data dependencies without stalling, plus
+            branch handling to recover the pipeline from control-flow disruption.
+          </p>
+          <p>
+            With the core stable, I built out the arithmetic. The ALU handles integer add,
+            subtract, and logic; the M-extension layers on hardware multiply and divide —
+            multiplies on a DSP-backed pipelined multiplier, divides on a multi-cycle unit that
+            stalls the pipeline until the quotient lands. Each has its own timing personality, and
+            getting them to coexist inside three stages was its own puzzle.
+          </p>
+          <p>
+            Once the ISA was complete, the bar moved from "run my test programs" to "run someone
+            else's software." I brought up the provided RTOS (Zephyr) on the core and booted it
+            all the way to a live shell over UART — which meant the design now had to handle real
+            interrupts, traps, and timer behavior instead of hand-written assembly.
+          </p>
+          <p>
+            The last phase was pure optimization. Vivado's timing report is the map here: every
+            route through the design carries a slack number, and the critical path — the slowest
+            one — caps how fast the whole core can be clocked. I chased that path down, the biggest
+            win being pulling the multiplier out of the combinational ALU and into its own
+            pipelined unit so it stopped dominating the critical path. That bought enough slack to
+            raise the clock and close timing cleanly, improving the project's figure of merit
+            (FOM) — the score that weighs performance against FPGA resource cost.
           </p>
         </section>
 
         <section>
           <h2>What I Built</h2>
-          <ul>
-            <li>Full 3-stage pipeline (IF / EX / WB) with per-stage pipeline registers and a clean module decomposition.</li>
-            <li>Hazard detection unit and WB→EX forwarding paths, eliminating the common RAW stalls without flushing.</li>
-            <li>RISC-V <strong>M-extension</strong> support: <code>mul</code>, <code>mulh</code>, <code>div</code>, <code>divu</code>, <code>rem</code>, <code>remu</code> — including the multi-cycle iterative divider with pipeline stalling.</li>
-            <li>Memory-mapped UART peripheral allowing the CPU to communicate with a host PC for debugging and program I/O.</li>
-            <li>Custom RV32 assembly test programs exercising each instruction class, validated against expected register/memory state.</li>
-            <li>Pair-collaborated through a shared Git-managed Vivado project, with reproducible synthesis flows.</li>
-          </ul>
+
+          <h3 class="project-subhead">Pipeline</h3>
+          <p>Full 3-stage pipeline (IF / EX / WB) with per-stage pipeline registers and a clean module decomposition.</p>
+
+          <h3 class="project-subhead">Forwarding</h3>
+          <p>Hazard-detection unit with writeback-to-execute and writeback-to-decode forwarding paths, eliminating the common RAW stalls without flushing.</p>
+
+          <h3 class="project-subhead">M-extension</h3>
+          <p>Full <code>mul</code>, <code>mulh</code>, <code>div</code>, <code>divu</code>, <code>rem</code>, <code>remu</code> support. Multiplies run on a DSP-backed pipelined multiplier; divides run on a multi-cycle divide unit that stalls the pipeline until the quotient is ready.</p>
+
+          <h3 class="project-subhead">UART I/O</h3>
+          <p>Memory-mapped UART peripheral letting the CPU communicate with a host PC for debugging and program I/O.</p>
+
+          <h3 class="project-subhead">RTOS bring-up</h3>
+          <p>Booted the provided Zephyr RTOS on the core all the way to a live shell over UART — exercising real interrupts, traps, and timer behavior on the design.</p>
+
+          <h3 class="project-subhead">Verification</h3>
+          <p>Custom RV32 assembly test programs exercising each instruction class, validated against expected register and memory state.</p>
+
+          <h3 class="project-subhead">Toolchain</h3>
+          <p>Pair-collaborated through a shared, Git-managed Vivado project with reproducible synthesis flows.</p>
         </section>
 
         <section>
@@ -113,18 +156,20 @@
           <p>
             Defense and aerospace platforms increasingly run custom logic on FPGAs — radar
             signal processing, sensor fusion, secure compute. Knowing how to build a CPU at
-            the RTL level is the difference between using FPGA toolchains as a black box and
-            being able to architect application-specific pipelines.
+            the RTL level is the difference between treating an FPGA toolchain as a black box and
+            being able to architect application-specific pipelines from first principles.
           </p>
         </section>
 
         <section>
           <h2>Tech Stack</h2>
           <div class="flex flex-wrap gap-2">
+            <span class="chip">SystemVerilog</span>
             <span class="chip">Xilinx FPGA</span>
             <span class="chip">Vivado</span>
-            <span class="chip">Verilog</span>
-            <span class="chip">RISC-V</span>
+            <span class="chip">RISC-V (RV32IM)</span>
+            <span class="chip">Zephyr RTOS</span>
+            <span class="chip">DSP multiplier</span>
             <span class="chip">UART</span>
             <span class="chip">Git</span>
           </div>

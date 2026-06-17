@@ -29,24 +29,13 @@ python -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-## Deploy to GitHub Pages
+## Live site
 
-1. Create a GitHub repo. For a **user site** (lives at `https://<your-username>.github.io`), name it exactly `<your-username>.github.io`. For a **project site** (lives at `https://<your-username>.github.io/<repo>`), use any name.
-2. Push these files to the `main` branch:
-   ```
-   git add .
-   git commit -m "Initial portfolio site"
-   git push origin main
-   ```
-3. In the repo on GitHub: **Settings → Pages**
-   - **Source:** Deploy from a branch
-   - **Branch:** `main` / `(root)`
-   - Save.
-4. Wait ~1 minute. The site is live at your GitHub Pages URL.
+https://eshong1801.github.io
 
 ## Customizing
 
-- **Resume PDF:** drop a file named `resume.pdf` in the repo root — the "Download Resume" button on the Contact section already links to it.
+- **Resume PDF:** drop a file named `Elliot_Hong_resume.pdf` in the repo root — the "Download Resume" button on the Contact section already links to it.
 - **GitHub URL:** update the placeholder links to your repo (search `eshong1801` in `index.html`).
 - **Accent color:** change `#3b82f6` in `index.html` (the `tailwind.config` block) and in `styles.css`.
 - **Project cards:** each `<article class="project-card">` in `index.html` is self-contained — copy/edit as needed.

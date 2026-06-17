@@ -77,8 +77,8 @@
       <p class="project-meta">CS 280 · Computer Vision · Spring 2026</p>
       <h1 class="project-title">V-JEPA Object Tracking</h1>
       <p class="project-tagline">
-        Latent-space prediction of projectile trajectories through visual occlusions using
-        V-JEPA 2.1 with CNN decoders — tracking objects the camera can't actually see.
+        Tracking a projectile through complete occlusion with V-JEPA 2.1 + a learned spatial
+        decoder — generative world models for object permanence.
       </p>
 
       <img class="project-hero"
@@ -96,43 +96,152 @@
           </p>
           <p>
             The system uses V-JEPA 2.1 as a frozen latent predictor and trains a small CNN
-            decoder to extract the projectile's spatial position from the predicted latent state.
+            decoder to extract a projectile's spatial position from the predicted latent state.
             When part of the scene is masked, the model has to rely on motion priors it learned
             during pretraining to "see through" the obstruction.
+          </p>
+          <p>
+            Built with Minh Vu as a CS C280 (Computer Vision) final project at UC Berkeley.
+          </p>
+        </section>
+
+        <section>
+          <h2>The Problem</h2>
+          <p>
+            Most modern object trackers fail catastrophically the moment their target leaves the
+            visible frame. A robotic arm tracking a tool, a self-driving car tracking a pedestrian
+            behind a parked van, a guided munition tracking a target through smoke — all of them go
+            blind when the pixels go.
+          </p>
+          <p>
+            Humans don't have this problem. We know the ball didn't disappear when it rolled behind
+            the couch. The question this project asks: can a modern self-supervised video foundation
+            model learn enough physics during pretraining that we can "decode" the trajectory of a
+            hidden object from its latent state alone?
           </p>
         </section>
 
         <section>
           <h2>What I Built</h2>
+
+          <h3 class="project-subhead">End-to-end V-JEPA + decoder pipeline</h3>
           <ul>
-            <li>End-to-end pipeline that takes an 8-frame video clip with a vertical occlusion mask and predicts the projectile's position at each timestep.</li>
-            <li>V-JEPA 2.1 backbone running in <code>predict</code> mode over masked input patches, producing latent representations of the occluded region.</li>
-            <li>Lightweight CNN decoder mapping the predicted latents back into a spatial heatmap, then to <code>(x, y)</code> coordinates.</li>
-            <li>Custom dataset of projectile-motion sequences with controlled mask positions for evaluation.</li>
-            <li>Visualization tooling: ground-truth markers (green +), predicted markers (red +), per-frame attention heatmaps, and final overlay onto the original video.</li>
+            <li>Takes an 8-frame video clip with a vertical occlusion mask and predicts the projectile's position at each timestep — including frames where the ball is fully hidden.</li>
+            <li>V-JEPA 2.1 backbone runs in <code>predict</code> mode over masked input patches, producing latent representations for the occluded region.</li>
+            <li>Lightweight CNN decoder (5-layer <code>ConvTranspose</code> stack) maps the predicted latents into a spatial heatmap, then to <code>(x, y)</code> coordinates.</li>
+          </ul>
+
+          <h3 class="project-subhead">3D U-Net supervised baseline</h3>
+          <ul>
+            <li>Independent 4-level 3D U-Net (~10M parameters) taking RGB + mask channel input and outputting per-frame heatmaps for the full clip.</li>
+            <li>Trained end-to-end on real catapult sequences with AdamW + cosine LR + mixed precision.</li>
+            <li>Acts as the strong learning-based reference point against the V-JEPA approach.</li>
+          </ul>
+
+          <h3 class="project-subhead">SORT-CA Kalman baseline</h3>
+          <ul>
+            <li>Classical Constant-Acceleration tracker extending the SORT framework to handle projectile gravity.</li>
+            <li>The "is V-JEPA actually doing physics, or could a constant-acceleration model handle this?" sanity check.</li>
+          </ul>
+
+          <h3 class="project-subhead">Custom physical test rig</h3>
+          <ul>
+            <li>Spring-loaded catapult for repeatable launches with minimal spin.</li>
+            <li>Black-cloth backdrop to suppress background texture and maximize ball contrast.</li>
+            <li>iPhone capture at 240 Hz slow-motion for dense temporal supervision.</li>
+            <li>Three ball colors (yellow, green, multicolor patterned) used to test position-vs-appearance generalization — if the model truly learns <em>where</em> the ball is, accuracy should be color-invariant.</li>
+          </ul>
+
+          <h3 class="project-subhead">Synthetic training pipeline</h3>
+          <ul>
+            <li>Procedurally generated decoder training data: solid colored circles on a uniform white canvas, paired with Gaussian ground-truth heatmaps. Infinite training data with zero manual annotation.</li>
+          </ul>
+
+          <h3 class="project-subhead">Visualization tooling</h3>
+          <ul>
+            <li>Per-frame attention heatmaps, ground-truth (red) vs. predicted (green) marker overlay, multi-tracker comparison strips, and final overlay onto the original video.</li>
           </ul>
         </section>
 
         <section>
-          <h2>Why It Matters</h2>
+          <h2>Results</h2>
+          <p class="project-subhead-p"><strong>3D U-Net vs. SORT-CA on real catapult sequences</strong></p>
+          <div class="overflow-x-auto mb-4">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>SORT-CA (Kalman)</th>
+                  <th>3D U-Net (ours)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Trajectory RMSE — median</td><td>100 px</td><td>14 px</td></tr>
+                <tr><td>Trajectory RMSE — mean</td><td>219 px</td><td>17 px</td></tr>
+                <tr><td>Re-entry error — median</td><td>2.5 px</td><td>4.2 px</td></tr>
+                <tr><td>Re-entry error — mean</td><td>120 px</td><td>15.4 px</td></tr>
+              </tbody>
+            </table>
+          </div>
           <p>
-            Most object trackers fall apart when the target leaves the frame or gets occluded.
-            But in real-world tracking — including defense applications like munitions tracking,
-            target re-acquisition, and sensor fusion — the object you care about <em>doesn't stop
-            existing</em> just because you stopped seeing it. This project is a small step toward
-            trackers that can carry physical priors through visual gaps.
+            The U-Net achieves a 6× reduction in median trajectory RMSE and a 13× reduction in
+            mean — a decisive win over classical motion estimators on the dominant metric.
           </p>
+          <p>
+            The re-entry metric tells a more nuanced story. SORT-CA actually has a better median
+            than the U-Net (2.5 px vs 4.2 px) on well-conditioned clips, but its mean explodes to
+            120 px when the pre-occlusion velocity estimate is noisy. The U-Net's strength isn't
+            being best on every clip — it's being consistent. For any control loop that depends on
+            bounded worst-case behavior, consistency wins.
+          </p>
+          <p class="project-subhead-p"><strong>V-JEPA pipeline</strong></p>
+          <p>
+            Qualitatively, the V-JEPA pipeline correctly tracks the ball through the occlusion: the
+            decoder's peak response stays aligned with the true position across the entire masked
+            window, and the ball re-emerges from the mask exactly where the predictor said it would.
+            The latent foundation model has internalized projectile momentum well enough to fill in
+            the gap — even though it was never trained on this task, this rig, or this camera.
+          </p>
+          <p>
+            The catch: rendered heatmaps are noisy. The decoder was trained on synthetic circles on
+            a clean white canvas, so it has no learned prior that "fabric texture ≠ ball" — and at
+            inference time it lights up secondary regions on the black cloth backdrop. The
+            localization signal still dominates, but the noise floor is high.
+          </p>
+        </section>
+
+        <section>
+          <h2>Key Findings</h2>
+          <ul>
+            <li><strong>Learned spatiotemporal features beat hand-coded motion models</strong> by an order of magnitude in cumulative RMSE — but the gap is much smaller in median than in mean, because the failure modes of the kinematic model are unbounded.</li>
+            <li><strong>The Kalman filter isn't always wrong.</strong> On easy clips it's competitive. The argument for learning isn't average-case accuracy — it's worst-case consistency.</li>
+            <li><strong>Decoupled training works for localization, fails for background suppression.</strong> A decoder trained on synthetic circles generalizes positionally to real catapult video but inherits no priors about what <em>isn't</em> an object.</li>
+            <li><strong>Foundation models contain usable physics.</strong> V-JEPA's frozen predictor produces latents whose peak response tracks a parabolic trajectory through an unseen occlusion, with no task-specific training.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Limitations & Future Work</h2>
+          <ul>
+            <li><strong>Close the synthetic-to-real decoder domain gap.</strong> Augment synthetic training with realistic background textures, color jitter, and fabric-like patterns so the decoder learns to suppress non-object activations.</li>
+            <li><strong>Extend beyond ballistic motion.</strong> Current evaluation is pure parabolic flight. The harder test is collisions inside the occluded region — scenarios where the velocity vector changes discontinuously and any constant-acceleration baseline fundamentally fails.</li>
+            <li><strong>Hybrid kinematic + world-model architecture.</strong> Use SORT-CA's prediction as a bounded search region inside which the V-JEPA world model refines the estimate. Combines the safety guarantee of classical estimation with the non-linear modeling capacity of learned priors.</li>
+          </ul>
         </section>
 
         <section>
           <h2>Tech Stack</h2>
           <div class="flex flex-wrap gap-2">
-            <span class="chip">Python</span>
             <span class="chip">PyTorch</span>
-            <span class="chip">V-JEPA 2.1</span>
-            <span class="chip">CNN</span>
+            <span class="chip">V-JEPA 2.1 (ViT-L)</span>
+            <span class="chip">3D U-Net</span>
+            <span class="chip">CNN decoder</span>
+            <span class="chip">SORT</span>
+            <span class="chip">Kalman (CA)</span>
             <span class="chip">NumPy</span>
             <span class="chip">Matplotlib</span>
+            <span class="chip">OpenCV</span>
+            <span class="chip">ffmpeg</span>
           </div>
         </section>
 

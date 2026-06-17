@@ -397,6 +397,68 @@ iframe.card-media {
   border-color: rgb(38 38 38);
 }
 
+/* Sub-headings within a project section */
+.project-subhead {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: rgb(23 23 23);
+}
+.dark .project-subhead {
+  color: rgb(245 245 245);
+}
+.project-subhead:first-child {
+  margin-top: 0;
+}
+.project-subhead-p {
+  margin-top: 1.5rem;
+}
+
+/* Results comparison table */
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.result-table th,
+.result-table td {
+  text-align: left;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid rgb(229 229 229);
+}
+.dark .result-table th,
+.dark .result-table td {
+  border-bottom-color: rgb(38 38 38);
+}
+.result-table th {
+  font-weight: 600;
+  color: rgb(23 23 23);
+  border-bottom-width: 2px;
+}
+.dark .result-table th {
+  color: rgb(245 245 245);
+}
+.result-table td {
+  color: rgb(64 64 64);
+}
+.dark .result-table td {
+  color: rgb(212 212 212);
+}
+.result-table td:not(:first-child),
+.result-table th:not(:first-child) {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+.result-table tbody tr:hover {
+  background: rgb(245 245 245);
+}
+.dark .result-table tbody tr:hover {
+  background: rgb(26 26 26);
+}
+
 /* Gallery — 1 col mobile, 2 col tablet+ */
 .gallery {
   display: grid;
